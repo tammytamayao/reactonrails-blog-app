@@ -9,6 +9,7 @@ export default function App() {
   return (
     <Router>
     <Routes>
+      <Route path="/" element={<Posts/>} />
       <Route path="/posts" element={<Posts/>} />
       <Route path="/posts/new" element={<NewPost/>} />
       <Route path="/posts/:id" element={<Post />} />
