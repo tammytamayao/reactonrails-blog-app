@@ -13,11 +13,20 @@ const EditPost = () => {
     const params = useParams();
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
+
+
+    useEffect(() => {
+      const url = `https://jsonplaceholder.typicode.com/posts/${params.id}`;
+      fetch(url)
+      .then((response) => response.json())
+      .then((res) => setPost(res))
+    }, []);
+   
     const [post, setPost]= useState<postState>({
-        id: 0,
+        id: parseInt(params.id+""),
         userId: 0,
-        title:"",
-        body:""
+        title:""+title,
+        body:""+body
       });
 
     const onChange = (post: React.ChangeEvent<HTMLInputElement>, setFunction: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void;}) => {
@@ -25,7 +34,30 @@ const EditPost = () => {
     };
 
     const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
+      
         post.preventDefault();
+
+        if (title.length == 0 || body.length == 0 ) {
+          alert('edit your information!')
+        }
+        else {
+
+          fetch(`https://jsonplaceholder.typicode.com/posts/${params.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+              id: parseInt(params.id+""),
+              userId: 0,
+              title:title,
+              body:body
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+          .then((response) => response.json())
+          .then((json) => console.log(json));
+        }
+
 
     }
 
@@ -42,7 +74,7 @@ const EditPost = () => {
                     type="text"
                     name="title"
                     id="postTitle"
-                    value={post.title}
+                    defaultValue={post.title}
                     className="form-control"
                     required
                     onChange={(e) => onChange(e, setTitle)}
@@ -55,14 +87,14 @@ const EditPost = () => {
                     type="textarea"
                     name="body"
                     id="postBody"
-                    value={post.body}
+                    defaultValue={post.body}
                     className="form-control"
                     required
                     onChange={(e) => onChange(e, setBody)}
                   />
                 </div>
     
-                <button type="submit">Create Post</button> <br/>
+                <button type="submit">Update Post</button> <br/>
                 <Link to="/posts">Back to Main</Link>
     
               </form>
