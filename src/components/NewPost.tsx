@@ -26,7 +26,7 @@ const NewPost = () => {
 
   const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
     post.preventDefault();
-    const url = 'https://jsonplaceholder.typicode.com/posts';
+    const url = 'http://192.168.0.155:3000/api/v1/posts/new';
 
     fetch(url, {
       method: 'POST',
