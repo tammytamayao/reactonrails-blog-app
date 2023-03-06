@@ -63,7 +63,7 @@ const EditPost = () => {
               setPost(res);
               alert("Post Edited"); 
           })
-          .then(() => window.location.reload())
+          .then(() => navigate("/posts"))
     }
 
     return (
