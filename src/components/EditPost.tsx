@@ -32,31 +32,38 @@ const EditPost = () => {
         setFunction(post.target.value);
     };
 
+    var titleDef = post.title;
+    var bodyDef = post.body;
+
     const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
       
         post.preventDefault();
         console.log(post)
 
-        if (title.length == 0 || body.length == 0 ) {
-          alert('edit your information!')
-        }
-        else {
-          const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
-          fetch(url, {
-            method: 'PUT',
-            body: JSON.stringify({
-              id: parseInt(params.id+""),
-              userId: parseInt(params.userId+""),
-              title:title,
-              body:body
-            }),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
-          })
+
+        if (title.length > 0){titleDef = title}
+        if (body.length > 0){bodyDef = body}
+
+        
+        const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/edit/${params.id}`;
+
+        fetch(url, {
+          method: 'PUT',
+          body: JSON.stringify({
+            title: titleDef,
+            body: bodyDef,
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
           .then((response) => response.json())
-          .then((json) => console.log(json));
-        }
+          .then((res) => {
+              console.log(res);
+              setPost(res);
+              alert("Post Edited"); 
+          })
+          .then(() => window.location.reload())
     }
 
     return (
@@ -71,7 +78,7 @@ const EditPost = () => {
                     type="text"
                     name="title"
                     id="postTitle"
-                    value={post.title}
+                    defaultValue={post.title}
                     className="form-control"
                     required
                     onChange={(e) => onChange(e, setTitle)}
@@ -84,7 +91,7 @@ const EditPost = () => {
                     type="textarea"
                     name="body"
                     id="postBody"
-                    value={post.body}
+                    defaultValue={post.body}
                     className="form-control"
                     required
                     onChange={(e) => onChange(e, setBody)}
