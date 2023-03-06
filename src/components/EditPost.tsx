@@ -13,10 +13,9 @@ const EditPost = () => {
     const params = useParams();
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
-
-
+    
     useEffect(() => {
-      const url = `https://jsonplaceholder.typicode.com/posts/${params.id}`;
+      const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
       fetch(url)
       .then((response) => response.json())
       .then((res) => setPost(res))
@@ -24,9 +23,9 @@ const EditPost = () => {
    
     const [post, setPost]= useState<postState>({
         id: parseInt(params.id+""),
-        userId: 0,
-        title:""+title,
-        body:""+body
+        userId: parseInt(params.userId+""),
+        title:title,
+        body:body
       });
 
     const onChange = (post: React.ChangeEvent<HTMLInputElement>, setFunction: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void;}) => {
@@ -36,17 +35,18 @@ const EditPost = () => {
     const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
       
         post.preventDefault();
+        console.log(post)
 
         if (title.length == 0 || body.length == 0 ) {
           alert('edit your information!')
         }
         else {
-
-          fetch(`https://jsonplaceholder.typicode.com/posts/${params.id}`, {
+          const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
+          fetch(url, {
             method: 'PUT',
             body: JSON.stringify({
               id: parseInt(params.id+""),
-              userId: 0,
+              userId: parseInt(params.userId+""),
               title:title,
               body:body
             }),
@@ -57,10 +57,7 @@ const EditPost = () => {
           .then((response) => response.json())
           .then((json) => console.log(json));
         }
-
-
     }
-
 
     return (
         <div>
@@ -74,7 +71,7 @@ const EditPost = () => {
                     type="text"
                     name="title"
                     id="postTitle"
-                    defaultValue={post.title}
+                    value={post.title}
                     className="form-control"
                     required
                     onChange={(e) => onChange(e, setTitle)}
@@ -87,7 +84,7 @@ const EditPost = () => {
                     type="textarea"
                     name="body"
                     id="postBody"
-                    defaultValue={post.body}
+                    value={post.body}
                     className="form-control"
                     required
                     onChange={(e) => onChange(e, setBody)}
