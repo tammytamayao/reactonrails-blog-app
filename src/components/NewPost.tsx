@@ -26,7 +26,7 @@ const NewPost = () => {
 
   const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
     post.preventDefault();
-    const url = 'http://192.168.0.155:3000/api/v1/posts/new';
+    const url = process.env.REACT_APP_API_ACTIVE+'api/v1/posts/create';
 
     fetch(url, {
       method: 'POST',

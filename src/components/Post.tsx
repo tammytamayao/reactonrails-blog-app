@@ -17,7 +17,7 @@ const Post = () => {
   });
 
   const deletePost = () => {
-    const url = `http://192.168.0.155:3000/api/v1/posts/${params.id}`;
+    const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
 
     fetch(url, { method: "DELETE"})
     .then((response) => {
@@ -31,7 +31,7 @@ const Post = () => {
   };
 
   useEffect(() => {
-    const url = `http://192.168.0.155:3000/api/v1/posts/${params.id}`;
+    const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
     fetch(url)
     .then((response) => response.json())
     .then((res) => setPost(res))

@@ -10,7 +10,7 @@ const Posts = () => {
     {
       window.location.replace(("/posts"));
     }
-    const url = 'http://192.168.0.155:3000/api/v1/posts';
+    const url = process.env.REACT_APP_API_ACTIVE+'api/v1/posts';
     fetch(url)
     .then((response) => response.json())
     .then((res) => setPosts(res));
