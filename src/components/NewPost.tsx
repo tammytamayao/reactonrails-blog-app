@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 interface postState {
   id: number,
   userId: number,
-  title: string;
+  title: string,
   body: string;
 }
 
@@ -19,13 +19,14 @@ const NewPost = () => {
     body:""
   });
 
+
   const onChange = (post: React.ChangeEvent<HTMLInputElement>, setFunction: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void;}) => {
     setFunction(post.target.value);
   };
 
   const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
     post.preventDefault();
-    const url = process.env.REACT_APP_API_ACTIVE+'api/v1/posts/create';
+    const url = 'http://192.168.0.155:3000/api/v1/posts/create';
 
     fetch(url, {
       method: 'POST',
@@ -63,7 +64,7 @@ const NewPost = () => {
                 required
                 onChange={(e) => onChange(e, setTitle)}
               />
-            </div>
+            </div>    
 
             <div className="form-group">
               <label htmlFor="postBody">Body </label>
