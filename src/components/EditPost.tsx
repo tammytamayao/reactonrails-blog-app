@@ -38,8 +38,6 @@ const EditPost = () => {
     const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
       
         post.preventDefault();
-        console.log(post)
-
 
         if (title.length > 0){titleDef = title}
         if (body.length > 0){bodyDef = body}
@@ -73,7 +71,7 @@ const EditPost = () => {
               <form onSubmit={onSubmit}>
     
                 <div className="form-group">
-                  <label htmlFor="recipeName">Title </label>
+                  <label>Title </label>
                   <input
                     type="text"
                     name="title"
@@ -86,7 +84,7 @@ const EditPost = () => {
                 </div>
     
                 <div className="form-group">
-                  <label htmlFor="recipeIngredients">Body </label>
+                  <label>Body </label>
                   <input
                     type="textarea"
                     name="body"
