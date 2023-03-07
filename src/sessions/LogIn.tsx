@@ -37,7 +37,7 @@ const LogIn = () => {
                     <div className="email">
                         <label className="form__label">Email </label>
                         <input  type="email" id="email" className="form__input" value={email} onChange = {(e) => onChange(e, setEmail)} placeholder="Email"/>
-                    </div>
+                    </div>   
                     <div className="password">
                         <label className="form__label">Password </label>
                         <input className="form__input" type="password"  id="password" value={password} onChange = {(e) => onChange(e, setPassword)} placeholder="Password"/>
