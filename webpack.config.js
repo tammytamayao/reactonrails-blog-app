@@ -19,3 +19,5 @@ module: {
     path: path.resolve(__dirname, 'dist'),
   },
 };
+
+
