@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {baseURL} from "../config/AxiosConfig";
 
 interface postState {
     id: number,
@@ -15,8 +16,7 @@ const EditPost = () => {
     const [body, setBody] = useState("");
     
     useEffect(() => {
-      const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
-      fetch(url)
+      fetch(baseURL+`/posts/${params.id}`)
       .then((response) => response.json())
       .then((res) => setPost(res))
     }, []);
@@ -42,10 +42,7 @@ const EditPost = () => {
         if (title.length > 0){titleDef = title}
         if (body.length > 0){bodyDef = body}
 
-        
-        const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/edit/${params.id}`;
-
-        fetch(url, {
+        fetch(baseURL+`/posts/edit/${params.id}`, {
           method: 'PUT',
           body: JSON.stringify({
             title: titleDef,
@@ -57,7 +54,6 @@ const EditPost = () => {
         })
           .then((response) => response.json())
           .then((res) => {
-              console.log(res);
               setPost(res);
               alert("Post Edited"); 
           })

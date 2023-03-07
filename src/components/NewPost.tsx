@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {baseURL} from "../config/AxiosConfig";
 
 interface postState {
   id: number,
@@ -25,9 +26,7 @@ const NewPost = () => {
 
   const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
     post.preventDefault();
-    const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/create`;
-
-    fetch(url, {
+    fetch(baseURL+`/posts/create`, {
       method: 'POST',
       body: JSON.stringify({
         title: title,
@@ -40,7 +39,6 @@ const NewPost = () => {
     })
       .then((response) => response.json())
       .then((res) => {
-          console.log(res);
           setPost(res);
           alert("New Post Added"); 
       })

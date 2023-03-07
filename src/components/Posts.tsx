@@ -1,17 +1,17 @@
 import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
+import {baseURL} from "../config/AxiosConfig";
 
 const Posts = () => {
 
   const [posts, setPosts] = useState<any[]>([]);
 
   useEffect(() => {
-    if(window.location.toString().includes("/posts") == false ) 
-    {
+    if(window.location.toString().includes("/posts") == false ) {
       window.location.replace(("/posts"));
     }
-    const url = process.env.REACT_APP_API_ACTIVE+'api/v1/posts';
-    fetch(url)
+
+    fetch(baseURL+`/posts`)
     .then((response) => response.json())
     .then((res) => setPosts(res));
   }, []);

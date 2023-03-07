@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {baseURL} from "../config/AxiosConfig";
 
 interface postState {
   id: number,
@@ -17,9 +18,7 @@ const Post = () => {
   });
 
   const deletePost = () => {
-    const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
-
-    fetch(url, { method: "DELETE"})
+    fetch(baseURL+`/posts/${params.id}`, { method: "DELETE"})
     .then((response) => {
       if (response.ok) {
         alert("Post deleted");
@@ -31,8 +30,7 @@ const Post = () => {
   };
 
   useEffect(() => {
-    const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
-    fetch(url)
+    fetch(baseURL+`/posts/${params.id}`)
     .then((response) => response.json())
     .then((res) => setPost(res))
   }, []);
