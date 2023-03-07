@@ -25,7 +25,6 @@ const SignUp = () => {
     const onSubmit = (user: React.FormEvent<HTMLFormElement>) => {
         user.preventDefault();
         console.log(email,password,confirmPassword);
-
     }
 
   return (

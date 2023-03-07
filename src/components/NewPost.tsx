@@ -19,7 +19,6 @@ const NewPost = () => {
     body:""
   });
 
-
   const onChange = (post: React.ChangeEvent<HTMLInputElement>, setFunction: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void;}) => {
     setFunction(post.target.value);
   };
