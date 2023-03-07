@@ -11,7 +11,8 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [confirmPassword,setConfirmPassword] = useState("");
-    const user = useState<userState>({
+    const navigate = useNavigate();
+    const [user, setUser] = useState<userState>({
         email: "",
         password: "",
         password_confirmation:""
@@ -23,8 +24,32 @@ const SignUp = () => {
     }
 
     const onSubmit = (user: React.FormEvent<HTMLFormElement>) => {
+        /*user.preventDefault();
+        console.log(email,password,confirmPassword);*/
+
         user.preventDefault();
-        console.log(email,password,confirmPassword);
+        const url = process.env.REACT_APP_API_ACTIVE+'api/v1/users/create';
+
+        fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            password_confirmation:confirmPassword
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            console.log(res);
+            setUser(res);
+            //alert("New User Added"); 
+
+            alert(res["response"]); 
+        })
+        //.then(() => navigate("/posts"))
 
     }
 
