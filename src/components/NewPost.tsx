@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {baseURL} from "../config/AxiosConfig";
+import {baseURL, client} from "../config/AxiosConfig";
 
 interface postState {
   id: number,
@@ -25,24 +25,21 @@ const NewPost = () => {
   };
 
   const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
+    
     post.preventDefault();
-    fetch(baseURL+`/posts/create`, {
-      method: 'POST',
-      body: JSON.stringify({
-        title: title,
-        body: body,
-        userId: Math.floor(Math.random() * (100 - 1 + 1) + 1)
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+    const payload = {title: title, body: body, userId: Math.floor(Math.random() * (100 - 1 + 1) + 1)};
+
+    client.post(baseURL+`/posts/create`,payload)
+    .then((response: any) => {
+      if(response.status===200) {
+        setPost(response.data);
+        alert("New Post Added");
+      } else {
+        alert('Post not added. Try Again.')
+      }
     })
-      .then((response) => response.json())
-      .then((res) => {
-          setPost(res);
-          alert("New Post Added"); 
-      })
-      .then(() => navigate("/posts"))
+    .then(() => navigate("/posts")) 
+
   };
 
   return (

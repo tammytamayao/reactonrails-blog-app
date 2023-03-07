@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-import {baseURL} from "../config/AxiosConfig";
+import {baseURL, client} from "../config/AxiosConfig";
 
 const Posts = () => {
 
@@ -11,9 +11,10 @@ const Posts = () => {
       window.location.replace(("/posts"));
     }
 
-    fetch(baseURL+`/posts`)
-    .then((response) => response.json())
-    .then((res) => setPosts(res));
+    client.get(baseURL+`/posts`)
+    .then((response: any) => {
+      setPosts(response.data)
+    })
   }, []);
 
   const allPosts = posts.map((post, index) => (

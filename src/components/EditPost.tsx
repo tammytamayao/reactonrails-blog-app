@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {baseURL} from "../config/AxiosConfig";
+import {baseURL, client} from "../config/AxiosConfig";
 
 interface postState {
     id: number,
@@ -42,22 +42,19 @@ const EditPost = () => {
         if (title.length > 0){titleDef = title}
         if (body.length > 0){bodyDef = body}
 
-        fetch(baseURL+`/posts/edit/${params.id}`, {
-          method: 'PUT',
-          body: JSON.stringify({
-            title: titleDef,
-            body: bodyDef,
-          }),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
+        const payload = {title: titleDef, body: bodyDef, userId: Math.floor(Math.random() * (100 - 1 + 1) + 1)};
+
+        client.put(baseURL+`/posts/edit/${params.id}`,payload)
+        .then((response: any) => {
+          if(response.status===200) {
+            setPost(response.data);
+            alert("Post Edited");
+          } else {
+            alert('Post not edited. Try Again.')
+          }
         })
-          .then((response) => response.json())
-          .then((res) => {
-              setPost(res);
-              alert("Post Edited"); 
-          })
-          .then(() => navigate("/posts"))
+        .then(() => navigate("/posts")) 
+
     }
 
     return (

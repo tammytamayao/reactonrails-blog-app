@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {baseURL} from "../config/AxiosConfig";
+import {baseURL, client} from "../config/AxiosConfig";
 
 interface postState {
   id: number,
@@ -18,21 +18,23 @@ const Post = () => {
   });
 
   const deletePost = () => {
-    fetch(baseURL+`/posts/${params.id}`, { method: "DELETE"})
-    .then((response) => {
-      if (response.ok) {
-        alert("Post deleted");
-        return response.json();
+    client.delete(baseURL+`/posts/${params.id}`)
+    .then((response: any) => {
+      if(response.status===200) {
+        alert('Post deleted')
+      } else {
+        alert('Post not deleted. Try Again.')
       }
-      throw new Error("Post Not Deleted. Try Again.");
     })
-    .then(() => navigate("/posts"))
+    .then(() => navigate("/posts")) 
+    
   };
 
   useEffect(() => {
-    fetch(baseURL+`/posts/${params.id}`)
-    .then((response) => response.json())
-    .then((res) => setPost(res))
+    client.get(baseURL+`/posts/${params.id}`)
+    .then((response: any) => {
+      setPost(response.data)
+    })
   }, []);
 
   return (
