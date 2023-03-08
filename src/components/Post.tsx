@@ -17,25 +17,26 @@ const Post = () => {
     body:""
   });
 
-  const deletePost = () => {
-    client.delete(baseURL+`/posts/${params.id}`)
-    .then((response: any) => {
+  const deletePost = async () => {
+    const response: any = await client.delete(baseURL+`/posts/${params.id}`);
       if(response.status===200) {
         alert('Post deleted')
+        navigate("/posts")
       } else {
         alert('Post not deleted. Try Again.')
       }
-    })
-    .then(() => navigate("/posts")) 
-    
   };
 
-  useEffect(() => {
-    client.get(baseURL+`/posts/${params.id}`)
-    .then((response: any) => {
+  const showPost = async () => {
+    const response: any = await client.get(baseURL+`/posts/${params.id}`);
+    if(response.status===200) {
       setPost(response.data)
-    })
-  }, []);
+    }
+  }
+
+  useEffect(() => {
+    showPost();
+  },[]); 
 
   return (
     <div>

@@ -14,12 +14,17 @@ const EditPost = () => {
     const params = useParams();
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
+
+    const getPost = async () => {
+      const response: any = await client.get(baseURL+`/posts/${params.id}`);
+      if(response.status===200) {
+        setPost(response.data)
+      }
+    }
     
     useEffect(() => {
-      fetch(baseURL+`/posts/${params.id}`)
-      .then((response) => response.json())
-      .then((res) => setPost(res))
-    }, []);
+      getPost();
+    },[]); 
    
     const [post, setPost]= useState<postState>({
         id: parseInt(params.id+""),
@@ -35,7 +40,7 @@ const EditPost = () => {
     var titleDef = post.title;
     var bodyDef = post.body;
 
-    const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (post: React.FormEvent<HTMLFormElement>) => {
       
         post.preventDefault();
 
@@ -44,17 +49,14 @@ const EditPost = () => {
 
         const payload = {title: titleDef, body: bodyDef, userId: Math.floor(Math.random() * (100 - 1 + 1) + 1)};
 
-        client.put(baseURL+`/posts/edit/${params.id}`,payload)
-        .then((response: any) => {
+        const response: any = await client.put(baseURL+`/posts/edit/${params.id}`,payload);
           if(response.status===200) {
             setPost(response.data);
             alert("Post Edited");
+            navigate("/posts");
           } else {
             alert('Post not edited. Try Again.')
           }
-        })
-        .then(() => navigate("/posts")) 
-
     }
 
     return (

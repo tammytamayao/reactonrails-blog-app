@@ -24,21 +24,19 @@ const NewPost = () => {
     setFunction(post.target.value);
   };
 
-  const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (post: React.FormEvent<HTMLFormElement>) => {
     
     post.preventDefault();
     const payload = {title: title, body: body, userId: Math.floor(Math.random() * (100 - 1 + 1) + 1)};
 
-    client.post(baseURL+`/posts/create`,payload)
-    .then((response: any) => {
+    const response: any = await client.post(baseURL+`/posts/create`,payload);
       if(response.status===200) {
         setPost(response.data);
-        alert("New Post Added");
+        alert('New post added');
+        navigate("/posts");
       } else {
         alert('Post not added. Try Again.')
       }
-    })
-    .then(() => navigate("/posts")) 
 
   };
 

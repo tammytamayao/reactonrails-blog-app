@@ -6,15 +6,18 @@ const Posts = () => {
 
   const [posts, setPosts] = useState<any[]>([]);
 
+  const getAllPosts = async () => {
+    const response: any = await client.get(baseURL+`/posts`);
+    if(response.status===200) {
+      setPosts(response.data)
+    }
+  }
+
   useEffect(() => {
     if(window.location.toString().includes("/posts") == false ) {
       window.location.replace(("/posts"));
     }
-
-    client.get(baseURL+`/posts`)
-    .then((response: any) => {
-      setPosts(response.data)
-    })
+    getAllPosts();
   }, []);
 
   const allPosts = posts.map((post, index) => (
