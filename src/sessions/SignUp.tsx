@@ -28,7 +28,7 @@ const SignUp = () => {
         console.log(email,password,confirmPassword);*/
 
         user.preventDefault();
-        const url = process.env.REACT_APP_API_ACTIVE+'api/v1/users/create';
+        const url = process.env.REACT_APP_API_ACTIVE+'api/v1/users/register';
 
         fetch(url, {
         method: 'POST',
