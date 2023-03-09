@@ -12,8 +12,9 @@ export default function App() {
   return (
     <Router>
     <Routes>
-      <Route path="/" element={<SignUp/>} />
+      <Route path="/" element={<LogIn/>} />
       <Route path="/login" element={<LogIn/>} />
+      <Route path="/signup" element={<SignUp/>} />
       <Route path="/posts" element={<Posts/>} />
       <Route path="/posts/new" element={<NewPost/>} />
       <Route path="/posts/:id" element={<Post />} />
