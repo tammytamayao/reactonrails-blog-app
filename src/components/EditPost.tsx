@@ -49,7 +49,7 @@ const EditPost = () => {
 
         const payload = {title: titleDef, body: bodyDef, userId: Math.floor(Math.random() * (100 - 1 + 1) + 1)};
 
-        const response: any = await client.put(baseURL+`/posts/edit/${params.id}`,payload);
+        const response: any = await client.put(baseURL+`/posts/${params.id}/edit`,payload);
           if(response.status===200) {
             setPost(response.data);
             alert("Post Edited");

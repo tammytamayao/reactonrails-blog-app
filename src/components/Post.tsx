@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {baseURL, client} from "../config/AxiosConfig";
+import Comments from "../comments/Comments";
 
 interface postState {
   id: number,
@@ -47,10 +48,11 @@ const Post = () => {
       <p></p>
       <h3>
         <Link to="/posts"> Back </Link> |
-        <Link to={`/posts/edit/${params.id}`}> Edit </Link> |
+        <Link to={`/posts/${params.id}/edit`}> Edit </Link> |
         <button type="button" className="btn btn-danger" onClick={deletePost}>Delete Post</button>
       </h3>
     </div>
+    <div><Comments /></div>
     </div>
   );
 }
