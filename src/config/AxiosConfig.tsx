@@ -5,4 +5,4 @@ const client = axios.create({
     baseURL: baseURL
 });
 
-export { baseURL, client }
+export { baseURL, client } 
