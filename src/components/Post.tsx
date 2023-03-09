@@ -38,7 +38,7 @@ const Post = () => {
   }, []);
 
   return (
-    <>
+    <div>
     <h1>Post #{post.id}</h1>
     <div>
       <span>Title: {post.title}</span><br/>
@@ -50,7 +50,10 @@ const Post = () => {
         <button type="button" className="btn btn-danger" onClick={deletePost}>Delete Post</button>
       </h3>
     </div>
-    </>
+    </div>
   );
 }
+
 export default Post;
+
+

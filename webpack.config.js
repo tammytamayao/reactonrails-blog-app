@@ -1,4 +1,5 @@
 const path = require('path');
+
 module.exports = {
 entry: './src/index.tsx',
 module: {
@@ -18,3 +19,5 @@ module: {
     path: path.resolve(__dirname, 'dist'),
   },
 };
+
+
