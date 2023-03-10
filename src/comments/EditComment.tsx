@@ -51,7 +51,7 @@ const EditComment = () => {
                 console.log(response);
                 setComment(response.data);
                 alert("Comment Edited");
-                navigate(`/posts/${params.id}`);
+                navigate(`/posts`);
               } else {
                 alert('Comment not edited. Try Again.')
               }
