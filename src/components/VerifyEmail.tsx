@@ -23,8 +23,6 @@ const VerifyEmail = () => {
       .then((response) => response.json())
       .then((res) => {
         console.log(res);
-        //alert(res["response"]); 
-        //document.write('<h1>'+res["response"]+'</h>')
         if (res["response"] == 'email verified') {
           setSuccessMessage(res["response"]);
           setTimeout(redirectLogIn, 3000);
@@ -69,5 +67,3 @@ const VerifyEmail = () => {
 };
 
 export default VerifyEmail;
-
-
