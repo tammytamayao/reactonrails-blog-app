@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {baseURL, client} from "../config/AxiosConfig";
 
 interface commentState {

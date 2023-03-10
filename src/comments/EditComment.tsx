@@ -18,21 +18,20 @@ const EditComment = () => {
     const getComment = async () => {
         const response: any = await client.get(baseURL+`/posts/${params.post_id}/comments/${params.id}`);
         if(response.status===200) {
-            console.log(response.data);
             setComment(response.data)
         }
-      }
+    }
       
-      useEffect(() => {
-        getComment();
-      },[]); 
+    useEffect(() => {
+      getComment();
+    },[]); 
      
-      const [comment, setComment]= useState<commentState>({
-          id: parseInt(params.id+""),
-          userId: parseInt(params.userId+""),
-          post_id: parseInt(params.post_id+""),
-          body: body
-        });
+    const [comment, setComment]= useState<commentState>({
+        id: parseInt(params.id+""),
+        userId: parseInt(params.userId+""),
+        post_id: parseInt(params.post_id+""),
+        body: body
+    });
     
     const onChange = (comment: React.ChangeEvent<HTMLInputElement>, setFunction: {(value: React.SetStateAction<string>): void;}) => {
         setFunction(comment.target.value);
@@ -48,7 +47,6 @@ const EditComment = () => {
     
         const response: any = await client.put(baseURL+`/posts/${params.post_id}/comments/${params.id}/edit`,payload);
             if(response.status===200) {
-                console.log(response);
                 setComment(response.data);
                 alert("Comment Edited");
                 navigate(`/posts`);
