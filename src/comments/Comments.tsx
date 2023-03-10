@@ -11,7 +11,6 @@ const Comments = () => {
     const getAllComments = async () => {
       const response: any = await client.get(baseURL+`/posts/${params.id}/comments`);
       if(response.status===200) {
-        console.log(response);
         setComments(response.data)
       }
     }
