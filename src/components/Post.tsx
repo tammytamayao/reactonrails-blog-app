@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {baseURL, client} from "../config/AxiosConfig";
+import Comments from "../comments/Comments";
 
 interface postState {
   id: number,
@@ -16,26 +18,26 @@ const Post = () => {
     body:""
   });
 
-  const deletePost = () => {
-    const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
-
-    fetch(url, { method: "DELETE"})
-    .then((response) => {
-      if (response.ok) {
-        alert("Post deleted");
-        return response.json();
+  const deletePost = async () => {
+    const response: any = await client.delete(baseURL+`/posts/${params.id}`);
+      if(response.status===200) {
+        alert('Post deleted')
+        navigate("/posts")
+      } else {
+        alert('Post not deleted. Try Again.')
       }
-      throw new Error("Post Not Deleted. Try Again.");
-    })
-    .then(() => navigate("/posts"))
   };
 
+  const showPost = async () => {
+    const response: any = await client.get(baseURL+`/posts/${params.id}`);
+    if(response.status===200) {
+      setPost(response.data)
+    }
+  }
+
   useEffect(() => {
-    const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
-    fetch(url)
-    .then((response) => response.json())
-    .then((res) => setPost(res))
-  }, []);
+    showPost();
+  },[]); 
 
   return (
     <div>
@@ -46,10 +48,11 @@ const Post = () => {
       <p></p>
       <h3>
         <Link to="/posts"> Back </Link> |
-        <Link to={`/posts/edit/${params.id}`}> Edit </Link> |
+        <Link to={`/posts/${params.id}/edit`}> Edit </Link> |
         <button type="button" className="btn btn-danger" onClick={deletePost}>Delete Post</button>
       </h3>
     </div>
+    <div><Comments /></div>
     </div>
   );
 }

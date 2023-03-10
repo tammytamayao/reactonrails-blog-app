@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {baseURL, client} from "../config/AxiosConfig";
 
 interface postState {
     id: number,
@@ -13,13 +14,17 @@ const EditPost = () => {
     const params = useParams();
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
+
+    const getPost = async () => {
+      const response: any = await client.get(baseURL+`/posts/${params.id}`);
+      if(response.status===200) {
+        setPost(response.data)
+      }
+    }
     
     useEffect(() => {
-      const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/${params.id}`;
-      fetch(url)
-      .then((response) => response.json())
-      .then((res) => setPost(res))
-    }, []);
+      getPost();
+    },[]); 
    
     const [post, setPost]= useState<postState>({
         id: parseInt(params.id+""),
@@ -35,33 +40,23 @@ const EditPost = () => {
     var titleDef = post.title;
     var bodyDef = post.body;
 
-    const onSubmit = (post: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (post: React.FormEvent<HTMLFormElement>) => {
       
         post.preventDefault();
 
         if (title.length > 0){titleDef = title}
         if (body.length > 0){bodyDef = body}
 
-        
-        const url = process.env.REACT_APP_API_ACTIVE+`api/v1/posts/edit/${params.id}`;
+        const payload = {title: titleDef, body: bodyDef, userId: Math.floor(Math.random() * (100 - 1 + 1) + 1)};
 
-        fetch(url, {
-          method: 'PUT',
-          body: JSON.stringify({
-            title: titleDef,
-            body: bodyDef,
-          }),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
-        })
-          .then((response) => response.json())
-          .then((res) => {
-              console.log(res);
-              setPost(res);
-              alert("Post Edited"); 
-          })
-          .then(() => navigate("/posts"))
+        const response: any = await client.put(baseURL+`/posts/${params.id}/edit`,payload);
+          if(response.status===200) {
+            setPost(response.data);
+            alert("Post Edited");
+            navigate("/posts");
+          } else {
+            alert('Post not edited. Try Again.')
+          }
     }
 
     return (
