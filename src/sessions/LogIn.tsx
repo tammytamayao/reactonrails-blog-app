@@ -14,6 +14,7 @@ const LogIn = () => {
             email: "",
             password: ""
           });
+        const [errorMessage, setErrorMessage] = useState('');
     
         const onChange = (user: React.ChangeEvent<HTMLInputElement>, setFunction: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void;}) => {
             console.log("This is handleInputChange function");
@@ -43,7 +44,13 @@ const LogIn = () => {
                 setUser(res);
                 //alert("New User Added"); 
     
-                alert(res["response"]); 
+                //alert(res["response"]); 
+                if (res["response"] == 'authenticated') {   
+                    document.location.href = '../post';
+                }
+                else { 
+                    setErrorMessage(res["response"]);
+                }
             })
             //.then(() => navigate("/posts"))
     
@@ -54,12 +61,18 @@ const LogIn = () => {
 
 
 
-                <style>{'body { background-color: #F5DEB3; }'}</style>
+                <style>{
+                    'body { background-image: url("background-log-in-002.jpg"); background-position: center;background-repeat: no-repeat;background-size: cover;backdrop-filter: blur(16px); }'
+                }</style>
+                
             
 
 <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
 <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
     <img src="logo_typekita.png"/>
+
+    <p className="error text-rose-600"> {errorMessage} </p>
+
     <form className="mt-6" onSubmit={onSubmit}>
         <div className="mb-2">
             <label
@@ -112,6 +125,8 @@ const LogIn = () => {
     </p>
 </div>
 </div>
+
+
 
         </>
       )
