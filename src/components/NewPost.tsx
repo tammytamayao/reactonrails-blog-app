@@ -27,20 +27,7 @@ const NewPost = () => {
   const onSubmit = async (post: React.FormEvent<HTMLFormElement>) => {
     
     post.preventDefault();
-<<<<<<< HEAD
     const url = process.env.REACT_APP_API_ACTIVE+'api/v1/posts/create';
-=======
-    const payload = {title: title, body: body, userId: Math.floor(Math.random() * (100 - 1 + 1) + 1)};
-
-    const response: any = await client.post(baseURL+`/posts/create`,payload);
-      if(response.status===200) {
-        setPost(response.data);
-        alert('New post added');
-        navigate("/posts");
-      } else {
-        alert('Post not added. Try Again.')
-      }
->>>>>>> origin
 
   };
 
