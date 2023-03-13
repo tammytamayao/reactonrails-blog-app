@@ -35,18 +35,11 @@ const VerifyEmail = () => {
           document.location.href = '../login';
        }
 
-        
-
         })
     }, []);
    
-    
-  
     return (
-
       <>
-
-
       <style>{
                           'body { background-image: url("../background-log-in-002.jpg"); background-position: center;background-repeat: no-repeat;background-size: cover;backdrop-filter: blur(16px); }'
                       }</style>
@@ -59,10 +52,7 @@ const VerifyEmail = () => {
           <p className="error text-lime-600"> {successMessage} </p>
       </div>
       </div>
-      
           </>
-        
-
     )
 };
 
