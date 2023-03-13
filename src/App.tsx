@@ -7,6 +7,9 @@ import EditPost from './components/EditPost';
 import SignUp from './sessions/SignUp';
 import LogIn from './sessions/LogIn';
 import VerifyEmail from './components/VerifyEmail';
+import Comments from './comments/Comments';
+import EditComment from './comments/EditComment';
+
 
 export default function App() {
   return (
@@ -19,6 +22,9 @@ export default function App() {
       <Route path="/posts/new" element={<NewPost/>} />
       <Route path="/posts/:id" element={<Post />} />
       <Route path="/verify/:token" element={<VerifyEmail />} />
+      <Route path="/posts/:id/edit" element={<EditPost />} />
+      <Route path="/posts/:post_id/comments" element={<Comments />} />
+      <Route path="/posts/:post_id/comments/:id/edit" element={<EditComment />} />
     </Routes>
   </Router>
   )
