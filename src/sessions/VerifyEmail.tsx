@@ -1,6 +1,7 @@
 import { Verify } from "crypto";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {baseURL, client} from "../config/AxiosConfig";
 
 interface postState {
     id: number,
@@ -16,13 +17,10 @@ const VerifyEmail = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-
-    useEffect(() => {
-      const url = process.env.REACT_APP_API_ACTIVE+`api/v1/users/activation/${params.token}`;
-      fetch(url)
-      .then((response) => response.json())
-      .then((res) => {
-        console.log(res);
+    const getTokenValidity = async () => {
+      const response: any = await client.get(baseURL+`/users/activation/${params.token}`);
+      if(response.status===200) {
+        const res= response.data;
         if (res["response"] == 'email verified') {
           setSuccessMessage(res["response"]);
           setTimeout(redirectLogIn, 3000);
@@ -30,13 +28,19 @@ const VerifyEmail = () => {
         else {          
           setErrorMessage(res["response"]);
         }
+      } else {
+        setErrorMessage('An error occurred.');
+      }
+    }
 
-        function redirectLogIn() {
-          document.location.href = '../login';
-       }
-
-        })
+    useEffect(() => {
+      getTokenValidity();
     }, []);
+
+    
+    function redirectLogIn() {
+      navigate("/login")
+   }
    
     return (
       <>

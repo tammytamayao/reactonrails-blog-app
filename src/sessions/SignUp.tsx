@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {baseURL, client} from "../config/AxiosConfig";
 
 interface userState {
     email: string,
@@ -27,33 +28,31 @@ const SignUp = () => {
         setFunction(user.target.value);
     }
 
-    const onSubmit = (user: React.FormEvent<HTMLFormElement>) => {
-        user.preventDefault();
-        const url = process.env.REACT_APP_API_ACTIVE+'api/v1/users/register';
 
-        fetch(url, {
-        method: 'POST',
-        body: JSON.stringify({
+    const onSubmit = async (post: React.FormEvent<HTMLFormElement>) => {
+    
+        post.preventDefault();
+        const payload = {
             email: email,
             password: password,
-            password_confirmation:confirmPassword
-        }),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-        })
-        .then((response) => response.json())
-        .then((res) => {
-            console.log(res);
-            setUser(res);
+            password_confirmation:confirmPassword};
+    
+        const response: any = await client.post(baseURL+`/users/register`,payload);
+          if(response.status===200) {
+            const res= response.data;
             setErrorMessage(res["response"]);
 
             if (res["response"] == "registration successful") {
                 navigate("/login")
             }
-        })
+          } else {
+            setErrorMessage('An error occurred.');
+          }
+    
+      };
 
-    }
+
+    
 
   return (
     <>

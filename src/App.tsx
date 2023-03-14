@@ -6,9 +6,10 @@ import Post from './components/Post';
 import EditPost from './components/EditPost';
 import SignUp from './sessions/SignUp';
 import LogIn from './sessions/LogIn';
-import VerifyEmail from './components/VerifyEmail';
+import VerifyEmail from './sessions/VerifyEmail';
 import Comments from './comments/Comments';
 import EditComment from './comments/EditComment';
+import UserHome from './components/UserHome';
 
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
       <Route path="/posts/:id/edit" element={<EditPost />} />
       <Route path="/posts/:post_id/comments" element={<Comments />} />
       <Route path="/posts/:post_id/comments/:id/edit" element={<EditComment />} />
+      <Route path="/userhome" element={<UserHome/>} />
     </Routes>
   </Router>
   )

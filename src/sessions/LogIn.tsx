@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {baseURL, client} from "../config/AxiosConfig";
+
 
 interface userState {
     email: string,
@@ -15,40 +17,46 @@ const LogIn = () => {
             password: ""
           });
         const [errorMessage, setErrorMessage] = useState('');
+        const navigate = useNavigate();
     
         const onChange = (user: React.ChangeEvent<HTMLInputElement>, setFunction: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void;}) => {
             console.log("This is handleInputChange function");
             setFunction(user.target.value);
         }
     
-        const onSubmit = (user: React.FormEvent<HTMLFormElement>) => {
-
-            user.preventDefault();
-            const url = process.env.REACT_APP_API_ACTIVE+'api/v1/users/login';
+        const onSubmit = async (post: React.FormEvent<HTMLFormElement>) => {
     
-            fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({
-                email: email,
-                password: password
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-            })
-            .then((response) => response.json())
-            .then((res) => {
-                console.log(res);
-                setUser(res);
-                if (res["response"] == 'authenticated') {   
-                    document.location.href = '../post';
+            post.preventDefault();
+            const payload = {email: email,password: password};
+        
+            const response: any = await client.post(baseURL+`/users/login`,payload);
+              if(response.status===200) {
+                const res= response.data;
+                if (res["response"] == 'authenticated') {            
+                    const payloadGetUserData = {email: email};
+                    const response: any = await client.post(baseURL+`/users/getuserdata`,payloadGetUserData);
+                    if(response.status===200) {
+                        const res= response.data;
+                        sessionStorage.setItem("user_email", email);     
+                        sessionStorage.setItem("user_id", res["user_id"]);
+                        sessionStorage.setItem("user_created", res["user_created"]);
+                        navigate("/userhome");
+                    }
+                    else {
+                        setErrorMessage('An error occurred.');
+                    }
+
+
                 }
                 else { 
                     setErrorMessage(res["response"]);
                 }
-            })
-    
-        }
+              }
+              else {
+                setErrorMessage('An error occurred.');
+              }
+        
+          };
     
       return (
         <>
