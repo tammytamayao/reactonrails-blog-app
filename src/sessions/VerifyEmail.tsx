@@ -45,7 +45,7 @@ const VerifyEmail = () => {
     return (
       <>
       <style>{
-                          'body { background-image: url("../background-log-in-002.jpg"); background-position: center;background-repeat: no-repeat;background-size: cover;backdrop-filter: blur(16px); }'
+                    'body { background-image: url("../background-log-in-002.jpg"); background-position: center;background-repeat: no-repeat;background-size: cover;backdrop-filter: blur(16px); background-attachment: fixed;}'
                       }</style>
                       
                   

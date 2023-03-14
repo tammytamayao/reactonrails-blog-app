@@ -40,6 +40,9 @@ const LogIn = () => {
                         sessionStorage.setItem("user_email", email);     
                         sessionStorage.setItem("user_id", res["user_id"]);
                         sessionStorage.setItem("user_created", res["user_created"]);
+                        sessionStorage.setItem("first_name", res["first_name"]);
+                        sessionStorage.setItem("middle_name", res["middle_name"]);
+                        sessionStorage.setItem("last_name", res["last_name"]);
                         navigate("/userhome");
                     }
                     else {
@@ -64,7 +67,7 @@ const LogIn = () => {
 
 
                 <style>{
-                    'body { background-image: url("background-log-in-002.jpg"); background-position: center;background-repeat: no-repeat;background-size: cover;backdrop-filter: blur(16px); }'
+                    'body { background-image: url("background-log-in-002.jpg"); background-position: center;background-repeat: no-repeat;background-size: cover;backdrop-filter: blur(16px); background-attachment: fixed;}'
                 }</style>
                 
             
@@ -86,7 +89,7 @@ const LogIn = () => {
             <input
                 type="email"
                 className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-black-400 focus:ring-black-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                id="email" value={email} onChange = {(e) => onChange(e, setEmail)} placeholder="Email"
+                id="email" value={email} onChange = {(e) => onChange(e, setEmail)} placeholder="Email" required
             />
         </div>
         <div className="mb-2">
@@ -99,7 +102,7 @@ const LogIn = () => {
             <input
                 type="password"
                 className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-black-400 focus:ring-black-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                id="password" value={password} onChange = {(e) => onChange(e, setPassword)} placeholder="Password"
+                id="password" value={password} onChange = {(e) => onChange(e, setPassword)} placeholder="Password" required
             />
         </div>
         <a

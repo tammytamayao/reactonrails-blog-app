@@ -6,6 +6,9 @@ interface userState {
     email: string,
     password: string,
     password_confirmation: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
   }
   
 
@@ -13,11 +16,17 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [confirmPassword,setConfirmPassword] = useState("");
+    const [firstName,setFirstName] = useState("");
+    const [middleName,setMiddleName] = useState("");
+    const [lastName,setLastName] = useState("");
     const navigate = useNavigate();
     const [user, setUser] = useState<userState>({
         email: "",
         password: "",
-        password_confirmation:""
+        password_confirmation:"",
+        first_name:"",
+        middle_name:"",
+        last_name:""
       });
       
     const [errorMessage, setErrorMessage] = useState('');
@@ -35,7 +44,10 @@ const SignUp = () => {
         const payload = {
             email: email,
             password: password,
-            password_confirmation:confirmPassword};
+            password_confirmation:confirmPassword,
+            first_name: firstName,
+            middle_name:middleName,
+            last_name:lastName};
     
         const response: any = await client.post(baseURL+`/users/register`,payload);
           if(response.status===200) {
@@ -59,7 +71,7 @@ const SignUp = () => {
 
 
 <style>{
-                    'body { background-image: url("background-log-in-002.jpg"); background-position: center;background-repeat: no-repeat;background-size: cover;backdrop-filter: blur(16px); }'
+                    'body { background-image: url("background-log-in-002.jpg"); background-position: center;background-repeat: no-repeat;background-size: cover;backdrop-filter: blur(16px); background-attachment: fixed;}'
                 }</style>
                 
             
@@ -81,9 +93,55 @@ const SignUp = () => {
             <input
                 type="email"
                 className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-black-400 focus:ring-black-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                id="email" value={email} onChange = {(e) => onChange(e, setEmail)} placeholder="Email"
+                id="email" value={email} onChange = {(e) => onChange(e, setEmail)} placeholder="Email" required
             />
         </div>
+
+
+        <div className="mb-2">
+            <label
+                htmlFor="first_name"
+                className="block text-sm font-semibold text-gray-800"
+            >
+                First Name
+            </label>
+            <input
+                type="text"
+                className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-black-400 focus:ring-black-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                id="firstName" value={firstName} onChange = {(e) => onChange(e, setFirstName)} placeholder="First Name" required
+            />
+        </div>
+
+        
+        <div className="mb-2">
+            <label
+                htmlFor="middle_name"
+                className="block text-sm font-semibold text-gray-800"
+            >
+                Middle Name
+            </label>
+            <input
+                type="text"
+                className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-black-400 focus:ring-black-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                id="middleName" value={middleName} onChange = {(e) => onChange(e, setMiddleName)} placeholder="First Name" required
+            />
+        </div>
+
+        
+        <div className="mb-2">
+            <label
+                htmlFor="last_name"
+                className="block text-sm font-semibold text-gray-800"
+            >
+                Last Name
+            </label>
+            <input
+                type="text"
+                className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-black-400 focus:ring-black-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                id="lastName" value={lastName} onChange = {(e) => onChange(e, setLastName)} placeholder="First Name" required
+            />
+        </div>
+        
         <div className="mb-2">
             <label
                 htmlFor="password"
@@ -94,7 +152,7 @@ const SignUp = () => {
             <input
                 type="password"
                 className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-black-400 focus:ring-black-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                id="password" value={password} onChange = {(e) => onChange(e, setPassword)} placeholder="Password"
+                id="password" value={password} onChange = {(e) => onChange(e, setPassword)} placeholder="Password" required
             />
         </div>
         
@@ -108,7 +166,7 @@ const SignUp = () => {
             <input
                 type="password"
                 className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-black-400 focus:ring-black-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                id="confirmPassword" value={confirmPassword} onChange = {(e) => onChange(e, setConfirmPassword)} placeholder="Confirm Password"
+                id="confirmPassword" value={confirmPassword} onChange = {(e) => onChange(e, setConfirmPassword)} placeholder="Confirm Password" required
             />
         </div>
         <div className="mt-6">
